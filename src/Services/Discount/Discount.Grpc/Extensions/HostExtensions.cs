@@ -25,18 +25,16 @@ namespace Discount.Grpc.Extensions
                         connection.Open();
                         using (var command = new NpgsqlCommand { Connection=connection })
                         {
-                            command.CommandText = "DROP TABLE IF EXISTS Coupon";
-                            command.ExecuteNonQuery();
-                            command.CommandText = @"create table Coupon(
+                            command.CommandText = @"create table if not exists Coupon(
                                                             Id serial primary key, 
                                                             ProductName varchar(24) not null,
                                                             Description Text,
                                                             Amount int
                                                     )";
                             command.ExecuteNonQuery();
-                            command.CommandText = "insert into Coupon(productname, description, amount) values('iPhone X','iPhone Discount',150)";
+                            command.CommandText = "insert into Coupon(productname, description, amount) values('iPhone 12','iPhone Discount',150)";
                             command.ExecuteNonQuery();
-                            command.CommandText = "insert into Coupon(productname, description, amount) values('Samsung 10','Samsung Discount',100)";
+                            command.CommandText = "insert into Coupon(productname, description, amount) values('Samsung 11','Samsung Discount',100)";
                             command.ExecuteNonQuery();
                         }
                     }

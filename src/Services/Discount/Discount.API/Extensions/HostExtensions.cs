@@ -25,9 +25,7 @@ namespace Discount.API.Extensions
                         connection.Open();
                         using (var command = new NpgsqlCommand { Connection=connection })
                         {
-                            command.CommandText = "DROP TABLE IF EXISTS Coupon";
-                            command.ExecuteNonQuery();
-                            command.CommandText = @"create table Coupon(
+                            command.CommandText = @"create table if not exists Coupon(
                                                             Id serial primary key, 
                                                             ProductName varchar(24) not null,
                                                             Description Text,
