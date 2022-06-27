@@ -20,7 +20,7 @@ namespace Discount.API.Extensions
                 var logger = services.GetRequiredService<ILogger<TContext>>();
                 try {
                     logger.LogInformation("migrating database");
-                    using (var connection= new NpgsqlConnection(configuration.GetValue<string>("DatabaseSettings:ConnectionString"))) 
+                    using var connection = new NpgsqlConnection(configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
                     {
                         connection.Open();
                         using (var command = new NpgsqlCommand { Connection=connection })
@@ -44,15 +44,6 @@ namespace Discount.API.Extensions
                 }
                 catch (NpgsqlException ex) 
                 {
-                    logger.LogError(ex, "database error");
-                    if (retryForAvailability < 5) 
-                    { 
-                        retryForAvailability++;
-                        System.Threading.Thread.Sleep(2000);
-                        MigrateDatabase<TContext>(host, retryForAvailability);
-                    }
-
-                    throw; 
                 }
                 return host;
             }

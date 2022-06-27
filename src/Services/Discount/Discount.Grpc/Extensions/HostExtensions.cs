@@ -42,17 +42,8 @@ namespace Discount.Grpc.Extensions
                     }
                     logger.LogInformation("migrating database done");
                 }
-                catch (NpgsqlException ex) 
+                catch (Exception ex) 
                 {
-                    logger.LogError(ex, "database error");
-                    if (retryForAvailability < 5) 
-                    { 
-                        retryForAvailability++;
-                        System.Threading.Thread.Sleep(2000);
-                        MigrateDatabase<TContext>(host, retryForAvailability);
-                    }
-
-                    throw; 
                 }
                 return host;
             }
