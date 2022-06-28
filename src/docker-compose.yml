@@ -5,10 +5,10 @@ services:
     image: mongo
 
   basketdb:
-    image: redis:alpine
+    image: redis
 
   discountdb:
-    image: postgres:alpine
+    image: postgres
 
   pgadmin:
     image: dpage/pgadmin4
